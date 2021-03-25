@@ -1,7 +1,7 @@
 # CRUD-Adonis.js
 CRUD de usuário em Node.js, com Framework Adonis.js
 
-O AdnisJs vem pré-configurado com:
+O AdonisJs vem pré-configurado com:
 
 1. Bodyparser
 2. Session
