@@ -17,7 +17,8 @@ O AdonisJs vem pré-configurado com:
 ### 1 - Clone o reposotório 
 
 ```bash
-git clone https://github.com/CarolineBarbosaM/CRUD-Adonisjs.git
+git clone git clone https://github.com/CarolineBarbosaM/CRUD-Adonisjs.git
+
 ```
 
 ### 2 - Instale a Dependências: 
@@ -80,3 +81,4 @@ DB_DATABASE=
 HASH_DRIVER=
 
 ```
+
