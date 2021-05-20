@@ -17,7 +17,7 @@ O AdonisJs vem pré-configurado com:
 ### 1 - Clone o reposotório 
 
 ```bash
-git clone git clone https://github.com/CarolineBarbosaM/CRUD-Adonisjs.git
+git clone git clone https://github.com/CarolineBarbosaM/CINEBR_BACK.git
 
 ```
 
