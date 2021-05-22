@@ -11,7 +11,7 @@ class AtorSchema extends Schema {
       table.date('dt_nascimento')
       table.string('descricao')
       table.string('participacao')
-      table.string('id_ator')
+      table.increments('id_ator')
       table.timestamps()
       table.datetime('deleted_at')
     })
