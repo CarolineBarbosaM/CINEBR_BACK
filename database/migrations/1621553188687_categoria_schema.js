@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class CategoriaSchema extends Schema {
   up () {
     this.create('categorias', (table) => {
-      table.increments()
+      table.increments('id')
       table.string('nome').notNullable()
       table.timestamps()
       table.datetime('deleted_at')
