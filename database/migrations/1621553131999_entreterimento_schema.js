@@ -7,7 +7,9 @@ class EntreterimentoSchema extends Schema {
   up () {
     this.create('entreterimentos', (table) => {
       table.increments()
+      table.string('tipo').notNullable()
       table.timestamps()
+      table.datetime('deleted_at')
     })
   }
 
