@@ -20,13 +20,13 @@ class CategoriaController {
     async list ({request, response}) {
       try {
         const {id} = request.params;
-        const user = await Database.from("categoria").where("id", id)
+        const categoria = await Database.from("categoria").where("id", id)
   
-        if (user == '') {
+        if (categoria == '') {
           return response.status(200).json({"message": "Categoria não encontrada!"});
         }
   
-        return response.status(200).json({user});
+        return response.status(200).json({categoria});
       } catch(ex) {
         return response.status(500).json({"message": "Erro!"});
       }
@@ -74,7 +74,7 @@ class CategoriaController {
         await User.query()
           from('categoria')
           where('id', id)
-          update({ deleted_at: moment().format("YYYY-MM-DD HH:mm:ss") });
+          update({ deleted_at: moment().format("YYYY-MM-DD") });
   
         return response.status(200).json({"mensage": "Categoria deletada!"});
   
