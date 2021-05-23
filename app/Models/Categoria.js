@@ -10,13 +10,13 @@ class Categoria extends Model {
     }
 
     static get table () {
-        return 'categoria'
+        return 'categorias'
       }
-    
+
       static get primaryKey(){
         return 'id';
       }
-    
+
       static get incrementing(){
         return false;
       }
