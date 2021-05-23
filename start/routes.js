@@ -1,5 +1,7 @@
 'use strict'
 
+const AuthController = require('../app/Controllers/Http/AuthController')
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -19,6 +21,8 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+
+Route.post('/auth', 'AuthController.authenticate');
 
 Route.group(() => {
   Route.post('/create', 'UserMController.create');
