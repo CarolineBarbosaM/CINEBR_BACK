@@ -1,6 +1,6 @@
 'use strict'
 const Ator = use('App/Models/Ator')
-
+const moment = require('moment');
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -21,8 +21,7 @@ class AtorController {
       'nome',
       'dt_nacimento',
       'descricao',
-      'participacao',
-      'id_ator'
+      'participacao'
     ])
 
     const ator = await Ator.create({ ...data });
@@ -37,17 +36,36 @@ class AtorController {
   
   // PUT or PATCH ators/update/:id
   async update ({ params, request, response }) {
+    /*
     const ator = await Ator.findOrFail(params.id);
     const data = request.only([
         'nome',
         'dt_nacimento',
         'descricao',
-        'participacao',
-        'id_ator'
+        'participacao'
     ]);
     ator.merge(data);
     await ator.save();
     return ator
+    */ 
+    try {
+      const { id } = request.params;
+      const { nome, dt_nascimento, descricao, participacao } = request.body
+
+      await Ator.query()
+        .from('ators')
+        .where('id', id)
+        .update({
+          nome,
+          dt_nascimento,
+          descricao,
+          participacao,
+          updated_at: moment().format("YYYY-MM-DD HH:mm:ss")
+        });
+      return response.status(200).json({ "mensage": "Usuario atualizado com sucesso." });
+    } catch(e) {
+      return response.status(500).json({ "mensage": e });
+    }
   }
 
   // DELETE ators/delete/:id
@@ -56,7 +74,7 @@ class AtorController {
 
     if (ator) {
       await ator.delete();
-      return response.status(200).send();
+      return response.status(200).send({ "success": "Deleted Successfuly"});
     } else {
       return response.status(404).send({ error: 'Not found' });
     }
