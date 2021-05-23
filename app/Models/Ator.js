@@ -8,18 +8,20 @@ class Ator extends Model {
         super.boot();
         this.addHook('beforeSave', 'AtorHook.uuid');
       }
-    
+
       static get table () {
         return 'ators'
       }
-    
+
       static get primaryKey(){
         return 'id';
       }
-    
+
       static get incrementing(){
         return false;
       }
+
+      // Relacionamento com ator
 }
 
 module.exports = Ator
