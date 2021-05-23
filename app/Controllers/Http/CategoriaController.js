@@ -6,7 +6,7 @@ const Categoria = use('App/Models/Categoria');
 class CategoriaController {
     async create ({request, response}) {
       try {
-        const categoria = request.only(["id", "nome"]);
+        const categoria = request.only(["nome"]);
   
         await Categoria.create(categoria);
   
