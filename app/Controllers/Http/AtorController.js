@@ -9,13 +9,13 @@ const Ator = use('App/Models/Ator')
  * Resourceful controller for interacting with ators
  */
 class AtorController {
-  // GET ators   
+  // GET ators/listAll   
   async listAll ({ request, response, view }) {
     const atores = Ator.all();
     return atores;
   }
 
-  // POST ators
+  // POST ators/create
   async create ({ request, response }) {
     const data = request.only([
       'nome',
@@ -29,13 +29,13 @@ class AtorController {
     return ator;
   }
 
-  // GET ators/:id
+  // GET ators/list/:id
   async list ({ params, request, response, view }) {
     const ator = await Ator.findOrFail(params.id);
     return ator;
   }
   
-  // PUT or PATCH ators/:id
+  // PUT or PATCH ators/update/:id
   async update ({ params, request, response }) {
     const ator = await Ator.findOrFail(params.id);
     const data = request.only([
@@ -50,7 +50,7 @@ class AtorController {
     return ator
   }
 
-  // DELETE ators/:id
+  // DELETE ators/delete/:id
   async delete ({ params, request, response }) {
     const ator = await Ator.findOrFail(params.id);
 
