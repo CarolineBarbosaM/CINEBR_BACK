@@ -28,4 +28,10 @@ Route.group(() => {
   Route.delete('/delete/:id', 'UserMController.delete');
 }).prefix('user');
 
-Route.resource('ators', 'AtorController').apiOnly();
+Route.group(() => {
+  Route.post('/create', 'AtorController.create');
+  Route.get('/list/:id', 'AtorController.list');
+  Route.get('/listAll', 'AtorController.listAll');
+  Route.put('/update/:id', 'AtorController.update');
+  Route.delete('/delete/:id', 'AtorController.delete');
+}).prefix('ators');

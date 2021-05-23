@@ -10,13 +10,13 @@ const Ator = use('App/Models/Ator')
  */
 class AtorController {
   // GET ators   
-  async index ({ request, response, view }) {
+  async listAll ({ request, response, view }) {
     const atores = Ator.all();
     return atores;
   }
 
   // POST ators
-  async store ({ request, response }) {
+  async create ({ request, response }) {
     const data = request.only([
       'nome',
       'dt_nacimento',
@@ -30,7 +30,7 @@ class AtorController {
   }
 
   // GET ators/:id
-  async show ({ params, request, response, view }) {
+  async list ({ params, request, response, view }) {
     const ator = await Ator.findOrFail(params.id);
     return ator;
   }
@@ -51,7 +51,7 @@ class AtorController {
   }
 
   // DELETE ators/:id
-  async destroy ({ params, request, response }) {
+  async delete ({ params, request, response }) {
     const ator = await Ator.findOrFail(params.id);
 
     if (ator) {
