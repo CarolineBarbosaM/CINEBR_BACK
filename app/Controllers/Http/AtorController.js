@@ -49,6 +49,7 @@ class AtorController {
     return ator
     */ 
     try {
+      const ator = await Ator.findOrFail(params.id);
       const { id } = request.params;
       const { nome, dt_nascimento, descricao, participacao } = request.body
 
