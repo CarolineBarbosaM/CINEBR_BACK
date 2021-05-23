@@ -19,7 +19,7 @@ class AtorController {
   async create ({ request, response }) {
     const data = request.only([
       'nome',
-      'dt_nacimento',
+      'dt_nascimento',
       'descricao',
       'participacao'
     ])
