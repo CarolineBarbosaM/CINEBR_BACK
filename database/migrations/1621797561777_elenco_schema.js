@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class ElencoSchema extends Schema {
   up () {
     this.create('elencos', (table) => {
-      table.increments('id').primary()
+      table.uuid('id').primary()
       table.integer('id_conteudo').notNullable().unique()
       table.integer('id_ator').notNullable().unique()
       table.timestamps()

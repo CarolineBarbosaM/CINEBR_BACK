@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class TipoConteudoSchema extends Schema {
   up () {
     this.create('tipo_conteudos', (table) => {
-      table.increments('id').primary()
+      table.uuid('id').primary()
       table.string('tipo').notNullable().unique()
       table.integer('id_conteudo').notNullable().unique()
       table.timestamps()
