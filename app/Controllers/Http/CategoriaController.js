@@ -8,7 +8,7 @@ class CategoriaController {
       try {
         const categoria = request.only(["id", "nome"]);
   
-        await Categoria.create(user);
+        await Categoria.create(categoria);
   
         return response.status(200).json({"message": "Categoria cadastrada."});
   
@@ -74,7 +74,7 @@ class CategoriaController {
         await User.query()
           from('categoria')
           where('id', id)
-          update({ deleted_at: moment().format("YYYY-MM-DD") });
+          update({deleted_at: moment().format("YYYY-MM-DD")});
   
         return response.status(200).json({"mensage": "Categoria deletada!"});
   
