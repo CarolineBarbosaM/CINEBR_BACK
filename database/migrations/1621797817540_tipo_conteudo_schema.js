@@ -8,7 +8,6 @@ class TipoConteudoSchema extends Schema {
     this.create('tipo_conteudos', (table) => {
       table.uuid('id').primary()
       table.string('tipo').notNullable().unique()
-      table.integer('id_conteudo').notNullable().unique()
       table.timestamps()
       table.datetime('deleted_at')
     })
