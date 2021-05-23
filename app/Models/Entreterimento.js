@@ -20,7 +20,10 @@ class Entreterimento extends Model {
     static get incrementing() {
         return false;
     }
-
+    
+    tipoconteudo() {
+        return this.hasMany('App/Models/TipoConteudo')
+      }
 }
 
 module.exports = Entreterimento
