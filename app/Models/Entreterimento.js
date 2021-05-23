@@ -4,6 +4,23 @@
 const Model = use('Model')
 
 class Entreterimento extends Model {
+    static boot () {
+        super.boot();
+        this.addHook('beforeSave', 'EntreterimentoHook.uuid');
+    }
+
+    static get table () {
+        return 'entreterimento'
+    }
+
+    static get primaryKey() {
+        return 'id';
+    }
+
+    static get incrementing() {
+        return false;
+    }
+
 }
 
 module.exports = Entreterimento
