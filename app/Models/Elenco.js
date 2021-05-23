@@ -21,18 +21,16 @@ class Elenco extends Model {
         return false;
       }
     
-    
-      id_serie() {
+      serie() {
         return this.hasMany('App/Models/Series')
       }
 
-      id_filme() {
+      filme() {
         return this.hasMany('App/Models/Filme')
       }
     
-      id_ator() {
+      ator() {
         return this.hasMany('App/Models/Ator')
       }
 }
-
 module.exports = Elenco

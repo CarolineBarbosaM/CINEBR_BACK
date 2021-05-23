@@ -21,5 +21,4 @@ class Categoria extends Model {
         return false;
       }
 }
-
 module.exports = Categoria
