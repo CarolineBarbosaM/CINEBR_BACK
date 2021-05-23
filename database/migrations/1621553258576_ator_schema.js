@@ -6,12 +6,12 @@ const Schema = use('Schema')
 class AtorSchema extends Schema {
   up () {
     this.create('ators', (table) => {
-      table.increments('id')
+      table.uuid('id').primary()
       table.string('nome').notNullable().unique()
       table.date('dt_nascimento')
       table.string('descricao')
       table.string('participacao')
-      table.string('id_ator')
+      table.increments('id_ator')
       table.timestamps()
       table.datetime('deleted_at')
     })

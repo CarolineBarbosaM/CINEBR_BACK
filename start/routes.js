@@ -27,3 +27,5 @@ Route.group(() => {
   Route.put('/update/:id', 'UserMController.update');
   Route.delete('/delete/:id', 'UserMController.delete');
 }).prefix('user');
+
+Route.resource('ators', 'AtorController').apiOnly();
