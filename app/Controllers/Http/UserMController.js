@@ -1,13 +1,14 @@
 'use strict'
 
-const User = use('App/Models/User')
+const User = use('App/Models/User');
+const Database = use('Database');
 const moment = require('moment');
 class UserMController {
   async create ({ request, response }) {
     try {
-      const data = request.only(["name_user", "email", "password", "dt_nascimento", "sexo", "phone", "acesso", "ativo"]);
+      const user = request.only(["name_user", "email", "password", "dt_nascimento", "sexo", "phone", "acesso", "ativo"]);
 
-      const user = await User.create(data);
+      await User.create(user);
 
       return response.status(200).json({ "message": 'Usuário cadastrado com sucesso.' });
 
@@ -17,16 +18,32 @@ class UserMController {
   }
 
   async list ({ request, response }) {
+    try {
+      const { id } = request.params;
+      const user = await Database.from('users').where('id', id)
+
+      if (user == '') {
+        return response.status(200).json({"message": "Usuário não encontrado"});
+      }
+
+      return response.status(200).json({ user });
+    } catch(e) {
+      return response.status(500).json({"message": "Erro ao listar usuário", e});
+    }
+
   }
 
 
-  async listAll ({ request, response }) {
+  async listAll ({ response }) {
     try {
-      const usuarios =  await User.from('users').whereNotNull('deleted_at')
+      const usuarios =  await Database
+        .from('users')
+        .where('deleted_at', null)
+        .select('*')
 
       return response.status(200).json({ usuarios });
     } catch(e) {
-      return response.status(500).json({"message": "Erro ao listar todos os usuário", e});
+      return response.status(500).json({"message": "Erro ao listar todos os usuários", e});
     }
   }
 
