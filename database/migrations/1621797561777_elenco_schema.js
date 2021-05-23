@@ -7,8 +7,9 @@ class ElencoSchema extends Schema {
   up () {
     this.create('elencos', (table) => {
       table.uuid('id').primary()
-      table.integer('id_conteudo').notNullable().unique()
-      table.integer('id_ator').notNullable().unique()
+      table.string('id_filme')
+      table.string('id_serie')
+      table.string('id_ator')
       table.timestamps()
       table.datetime('deleted_at')
     })
