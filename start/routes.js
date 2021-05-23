@@ -19,3 +19,11 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+
+Route.group(() => {
+  Route.post('/create', 'UserMController.create');
+  Route.get('/list/:id', 'UserMController.list');
+  Route.get('/listAll', 'UserMController.listAll');
+  Route.put('/update/:id', 'UserMController.update');
+  Route.delete('/delete/:id', 'UserMController.delete');
+}).prefix('user');
