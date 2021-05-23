@@ -23,16 +23,15 @@ class UserMController {
       const user = await Database.from('users').where('id', id)
 
       if (user == '') {
-        return response.status(200).json({"message": "Usuário não encontrado"});
+        return response.status(200).json({ "message": "Usuário não encontrado" });
       }
 
       return response.status(200).json({ user });
     } catch(e) {
-      return response.status(500).json({"message": "Erro ao listar usuário", e});
+      return response.status(500).json({ "message": "Erro ao listar usuário" });
     }
 
   }
-
 
   async listAll ({ response }) {
     try {
@@ -43,10 +42,9 @@ class UserMController {
 
       return response.status(200).json({ usuarios });
     } catch(e) {
-      return response.status(500).json({"message": "Erro ao listar todos os usuários", e});
+      return response.status(500).json({ "message": "Erro ao listar todos os usuários" });
     }
   }
-
 
   async update ({ request, response }) {
     try {
@@ -74,7 +72,6 @@ class UserMController {
       return response.status(500).json({ "mensage": "Erro ao atualizado usuario." });
     }
   }
-
 
   async delete ({  request, response }) {
     try {
