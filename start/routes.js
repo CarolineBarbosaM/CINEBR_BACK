@@ -16,8 +16,30 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-{
-Route.resource('categoria', 'CategoriaController').
-apiOnly()
+Route.get('/', () => {
+  return { greeting: 'Hello world in JSON' }
+})
 
-}
+Route.group(() => {
+  Route.post('/create', 'UserMController.create');
+  Route.get('/list/:id', 'UserMController.list');
+  Route.get('/listAll', 'UserMController.listAll');
+  Route.put('/update/:id', 'UserMController.update');
+  Route.delete('/delete/:id', 'UserMController.delete');
+}).prefix('user');
+
+Route.group(() => {
+  Route.post('/create', 'AtorController.create');
+  Route.get('/list/:id', 'AtorController.list');
+  Route.get('/listAll', 'AtorController.listAll');
+  Route.put('/update/:id', 'AtorController.update');
+  Route.delete('/delete/:id', 'AtorController.delete');
+}).prefix('ators');
+
+Route.group(() => {
+  Route.post('/create', 'CategoriaController.create');
+  Route.get('/list/:id', 'CategoriaController.list');
+  Route.get('/listAll', 'CategoriaController.listAll');
+  Route.put('/update/:id', 'CategoriaController.update');
+  Route.delete('/delete/:id', 'CategoriaController.delete');
+}).prefix('categoria');

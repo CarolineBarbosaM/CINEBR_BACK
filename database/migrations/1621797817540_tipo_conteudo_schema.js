@@ -3,19 +3,19 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class CategoriaSchema extends Schema {
+class TipoConteudoSchema extends Schema {
   up () {
-    this.create('categorias', (table) => {
+    this.create('tipo_conteudos', (table) => {
       table.uuid('id').primary()
-      table.string('nome').notNullable()
+      table.string('tipo').notNullable().unique()
       table.timestamps()
       table.datetime('deleted_at')
     })
   }
 
   down () {
-    this.drop('categorias')
+    this.drop('tipo_conteudos')
   }
 }
 
-module.exports = CategoriaSchema
+module.exports = TipoConteudoSchema

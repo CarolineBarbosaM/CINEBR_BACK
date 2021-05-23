@@ -6,7 +6,7 @@ const Schema = use('Schema')
 class FilmesSchema extends Schema {
   up () {
     this.create('filmes', (table) => {
-      table.increments('id')
+      table.uuid('id').primary()
       table.string('titulo').notNullable().unique()
       table.date('ano')
       table.string('sinopse')

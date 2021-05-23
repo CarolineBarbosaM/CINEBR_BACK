@@ -1,92 +1,92 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
-/**
- * Resourceful controller for interacting with userms
- */
+const User = use('App/Models/User');
+const Database = use('Database');
+const moment = require('moment');
 class UserMController {
-  /**
-   * Show a list of all userms.
-   * GET userms
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async create ({ request, response }) {
+    try {
+      const user = request.only(["name_user", "email", "password", "dt_nascimento", "sexo", "phone", "acesso", "ativo"]);
+
+      await User.create(user);
+
+      return response.status(200).json({ "message": 'Usuário cadastrado com sucesso.' });
+
+    } catch(e) {
+      return response.status(500).json(e);
+    }
   }
 
-  /**
-   * Render a form to be used for creating a new userm.
-   * GET userms/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async list ({ request, response }) {
+    try {
+      const { id } = request.params;
+      const user = await Database.from('users').where('id', id)
+
+      if (user == '') {
+        return response.status(200).json({ "message": "Usuário não encontrado" });
+      }
+
+      return response.status(200).json({ user });
+    } catch(e) {
+      return response.status(500).json({ "message": "Erro ao listar usuário" });
+    }
+
   }
 
-  /**
-   * Create/save a new userm.
-   * POST userms
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async listAll ({ response }) {
+    try {
+      const usuarios =  await Database
+        .from('users')
+        .where('deleted_at', null)
+        .select('*')
+
+      return response.status(200).json({ usuarios });
+    } catch(e) {
+      return response.status(500).json({ "message": "Erro ao listar todos os usuários" });
+    }
   }
 
-  /**
-   * Display a single userm.
-   * GET userms/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update ({ request, response }) {
+    try {
+      const { id } = request.params;
+      const { name_user, email, password, dt_nascimento, sexo, phone, acesso, ativo } = request.body
+
+      await User.query()
+        .from('users')
+        .where('id', id)
+        .update({
+          name_user,
+          email,
+          password,
+          dt_nascimento,
+          sexo,
+          phone,
+          acesso,
+          ativo,
+          updated_at: moment().format("YYYY-MM-DD HH:mm:ss")
+        });
+
+      return response.status(200).json({ "mensage": "Usuario atualizado com sucesso." });
+
+    } catch(e) {
+      return response.status(500).json({ "mensage": "Erro ao atualizado usuario." });
+    }
   }
 
-  /**
-   * Render a form to update an existing userm.
-   * GET userms/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async delete ({  request, response }) {
+    try {
+      const { id } = request.params;
 
-  /**
-   * Update userm details.
-   * PUT or PATCH userms/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
+      await User.query()
+        .from('users')
+        .where('id', id)
+        .update({ deleted_at: moment().format("YYYY-MM-DD HH:mm:ss") });
 
-  /**
-   * Delete a userm with id.
-   * DELETE userms/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+      return response.status(200).json({ "mensage": "Usuario deletado com sucesso." });
+
+    } catch(e) {
+      return response.status(500).json({ "mensage": "Erro ao deletar usuario." });
+    }
   }
 }
 
