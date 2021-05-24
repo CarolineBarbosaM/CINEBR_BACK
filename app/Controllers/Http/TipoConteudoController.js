@@ -1,93 +1,63 @@
 'use strict'
+const TipoConteudo = use('App/Models/TipoConteudo')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 /**
- * Resourceful controller for interacting with tipoconteudos
+ * Resourceful controller for interacting with entretenimentos
  */
-class TipoConteudoController {
-  /**
-   * Show a list of all tipoconteudos.
-   * GET tipoconteudos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+class AtorController {
+  // GET entretenimentos/listAll   
+  async listAll ({ request, response, view }) {
+    const tipo = TipoConteudo.all();
+    return tipo;
   }
 
-  /**
-   * Render a form to be used for creating a new tipoconteudo.
-   * GET tipoconteudos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  // POST entretenimentos/create
+  async create ({ request, response }) {
+    const tipo = request.only([
+      'id',
+      'tipo'
+    ])
+
+    const tipo = await TipoConteudo.create({ ...tipo});
+    return tipo;
   }
 
-  /**
-   * Create/save a new tipoconteudo.
-   * POST tipoconteudos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  // GET entretenimentos/list/:id
+  async list ({ params, request, response, view }) {
+    const tipo = await TipoConteudo.findOrFail(params.id);
+    return tipo;
   }
-
-  /**
-   * Display a single tipoconteudo.
-   * GET tipoconteudos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing tipoconteudo.
-   * GET tipoconteudos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update tipoconteudo details.
-   * PUT or PATCH tipoconteudos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
+  
+  // PUT or PATCH entretenimentos/update/:id
   async update ({ params, request, response }) {
+    const tipo  = await TipoConteudo.findOrFail(params.id);
+    const tipo = request.only([
+      'id',
+      'tipo'
+    ]);
+
+    tipo.merge(tipo);
+    await tipo.save();
+    return tipo
   }
 
-  /**
-   * Delete a tipoconteudo with id.
-   * DELETE tipoconteudos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+// DELETE entretenimentos/delete/:id
+async delete ({ params, request, response }) {
+  const tipo = await TipoConteudo.findOrFail(params.id);
+
+
+    if (tipo) {
+      await tipo.delete();
+      return response.status(200).send();
+    } else {
+      return response.status(404).send({ error: 'Not found' });
+    }
   }
 }
+
 
 module.exports = TipoConteudoController
