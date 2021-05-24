@@ -43,3 +43,11 @@ Route.group(() => {
   Route.put('/update/:id', 'CategoriaController.update');
   Route.delete('/delete/:id', 'CategoriaController.delete');
 }).prefix('categoria');
+
+Route.group(() => {
+  Route.post('/create', 'SeriesController.create');
+  Route.get('/list/:id', 'SeriesController.list');
+  Route.get('/listAll', 'SeriesController.listAll');
+  Route.put('/update/:id', 'SeriesController.update');
+  Route.delete('/delete/:id', 'SeriesController.delete');
+}).prefix('series');

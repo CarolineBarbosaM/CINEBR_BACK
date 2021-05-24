@@ -21,8 +21,8 @@ class Series extends Model {
     return false;
   }
 
-  elenco() {
-    return this.hasMany('App/Models/Elenco')
+  eleco() {
+    return this.hasMany('App/Models/Eleco')
   }
 
   categoria() {

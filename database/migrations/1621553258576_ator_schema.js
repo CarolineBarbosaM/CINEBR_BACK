@@ -10,7 +10,7 @@ class AtorSchema extends Schema {
       table.string('nome').notNullable().unique()
       table.date('dt_nascimento')
       table.string('descricao')
-      table.string('participacao')
+      table.string('elenco')
       table.timestamps()
       table.datetime('deleted_at')
     })

@@ -9,7 +9,7 @@ const moment = require('moment');
  * Resourceful controller for interacting with ators
  */
 class AtorController {
-  // GET ators/listAll   
+  // GET ators/listAll
   async listAll ({ request, response, view }) {
     const atores = Ator.all();
     return atores;
@@ -21,7 +21,7 @@ class AtorController {
       'nome',
       'dt_nascimento',
       'descricao',
-      'participacao'
+      'elenco'
     ])
 
     const ator = await Ator.create({ ...data });
@@ -33,7 +33,7 @@ class AtorController {
     const ator = await Ator.findOrFail(params.id);
     return ator;
   }
-  
+
   // PUT or PATCH ators/update/:id
   async update ({ params, request, response }) {
     /*
@@ -47,7 +47,7 @@ class AtorController {
     ator.merge(data);
     await ator.save();
     return ator
-    */ 
+    */
     try {
       const ator = await Ator.findOrFail(params.id);
       const { id } = request.params;
