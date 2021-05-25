@@ -43,3 +43,11 @@ Route.group(() => {
   Route.put('/update/:id', 'CategoriaController.update');
   Route.delete('/delete/:id', 'CategoriaController.delete');
 }).prefix('categoria');
+
+Route.group(() => {
+  Route.post('/create', 'TipoConteudoController.create');
+  Route.get('/list/:id', 'TipoConteudoController.list');
+  Route.get('/listAll', 'TipoConteudoController.listAll');
+  Route.put('/update/:id', 'TipoConteudoController.update');
+  Route.delete('/delete/:id', 'TipoConteudoController.delete');
+}).prefix('entretenimento');
