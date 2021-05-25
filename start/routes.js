@@ -45,9 +45,9 @@ Route.group(() => {
 }).prefix('categoria');
 
 Route.group(() => {
-  Route.post('/create', 'TipoConteudoController.create');
-  Route.get('/list/:id', 'TipoConteudoController.list');
-  Route.get('/listAll', 'TipoConteudoController.listAll');
-  Route.put('/update/:id', 'TipoConteudoController.update');
-  Route.delete('/delete/:id', 'TipoConteudoController.delete');
+  Route.post('/create', 'EntretenimentoController.create');
+  Route.get('/list/:id', 'EntretenimentoController.list');
+  Route.get('/listAll', 'EntretenimentoController.listAll');
+  Route.put('/update/:id', 'EntretenimentoController.update');
+  Route.delete('/delete/:id', 'EntretenimentoController.delete');
 }).prefix('entretenimento');
