@@ -1,6 +1,6 @@
 'use strict'
 
-const Categoria = use('App/Models/TipoConteudo');
+const Categoria = use('App/Models/Entretenimento');
 const Database = use('Database');
 const moment = require('moment');
 
