@@ -1,4 +1,6 @@
 'use strict'
+const Filme= use('App/Models/Filme')
+const Database = use('Database');
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -8,85 +10,91 @@
  * Resourceful controller for interacting with filmes
  */
 class FilmeController {
-  /**
-   * Show a list of all filmes.
-   * GET filmes
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async create ({ request, response, auth }) {
+    try {
+      const filme = request.only(["titulo", "ano", "sinopse", "classificacao", "capa"]);
+
+      await Filme.create(filme);
+
+      return response.status(200).json({ "message": 'Filme cadastrada com sucesso.' });
+
+    } catch(e) {
+      return response.status(500).json({"message": 'Erro ao cadastrar filme'});
+    }
   }
 
-  /**
-   * Render a form to be used for creating a new filme.
-   * GET filmes/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async list ({ request, response }) {
+    try {
+      const { id } = request.params;
+      const user = await Database.from('filmes').where('id', id)
+
+      if (filme == '') {
+        return response.status(200).json({ "message": "Filmes não foi encontrado" });
+      }
+
+      return response.status(200).json({ serie });
+    } catch(e) {
+      return response.status(500).json({ "message": "Erro ao listar filmes" });
+    }
   }
 
-  /**
-   * Create/save a new filme.
-   * POST filmes
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+
+  async listAll ({ response }) {
+    try {
+      const filmes =  await Database
+        .from('filmes')
+        .where('deleted_at', null)
+        .select('*')
+
+      return response.status(200).json({ filmes });
+    } catch(e) {
+      return response.status(500).json({ "message": "Erro ao listar todos os filmes" });
+    }
   }
 
-  /**
-   * Display a single filme.
-   * GET filmes/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+
+  async update ({ request, response }) {
+    try {
+      const { id } = request.params;
+      const { titulo, ano,  sinopse, classificacao, capa, id_ator } = request.body
+
+      await Serie.query()
+        .from('filmes')
+        .where('id', id)
+        .update({
+          titulo,
+          ano,
+          sinopse,
+          classificacao,
+          capa,
+          id_ator,
+          updated_at: moment().format("YYYY-MM-DD HH:mm:ss")
+        });
+
+      return response.status(200).json({ "mensage": "Filmes atualizada com sucesso." });
+
+    } catch(e) {
+      return response.status(500).json({ "mensage": "Erro ao atualizado filmes." });
+    }
   }
 
-  /**
-   * Render a form to update an existing filme.
-   * GET filmes/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+  async delete ({ request, response }) {
+    try {
+      const { id } = request.params;
 
-  /**
-   * Update filme details.
-   * PUT or PATCH filmes/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
+      await Filme.query()
+      .from('filmes')
+      .where('id', id)
+      .update({
+        deleted_at: moment().format("YYYY-MM-DD HH:mm:ss")
+      });
 
-  /**
-   * Delete a filme with id.
-   * DELETE filmes/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+
+      return response.status(200).json({ "mensage": "Filme deletado com sucesso." });
+
+    } catch(e) {
+      return response.status(500).json({ "mensage": "Erro ao deletar filme." });
+    }
   }
 }
 

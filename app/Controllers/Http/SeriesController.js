@@ -13,7 +13,7 @@ class SeriesController {
       return response.status(200).json({ "message": 'Serie cadastrada com sucesso.' });
 
     } catch(e) {
-      return response.status(500).json({"message": 'Erro ao cadastrar usuário'});
+      return response.status(500).json({"message": 'Erro ao cadastrar série'});
     }
   }
 
@@ -77,19 +77,18 @@ class SeriesController {
     try {
       const { id } = request.params;
 
-      const query = await Database.raw(`
-        select s.id, s.titulo, s.ano, s.sinopse, s.classificacao, s.capa, s.id_ator, id_categoria
-        from series as s
-        inner join ators as a ON a.id = s.id_ator
-        inner join categorias as c ON c.id = s.id_categoria
-        where s.id = ${ id }`
-      );
+      await Serie.query()
+      .from('series')
+      .where('id', id)
+      .update({
+        deleted_at: moment().format("YYYY-MM-DD HH:mm:ss")
+      });
 
 
-      return response.status(200).json({ "mensage": "Usuario deletado com sucesso." });
+      return response.status(200).json({ "mensage": "Serie deletado com sucesso." });
 
     } catch(e) {
-      return response.status(500).json({ "mensage": "Erro ao deletar usuario." });
+      return response.status(500).json({ "mensage": "Erro ao deletar serie." });
     }
   }
 
