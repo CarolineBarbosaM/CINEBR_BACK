@@ -1,63 +1,90 @@
 'use strict'
-const TipoConteudo = use('App/Models/TipoConteudo')
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Categoria = use('App/Models/TipoConteudo');
+const Database = use('Database');
+const moment = require('moment');
 
-/**
- * Resourceful controller for interacting with entretenimentos
- */
-class AtorController {
-  // GET entretenimentos/listAll   
-  async listAll ({ request, response, view }) {
-    const tipo = TipoConteudo.all();
-    return tipo;
-  }
+class TipoConteudoController {
+    async create ({request, response}) {
+      try {
+        const tipo = request.only(["entretenimentos"]);
 
-  // POST entretenimentos/create
-  async create ({ request, response }) {
-    const tipo = request.only([
-      'id',
-      'tipo'
-    ])
+        await TipoConteudo.create(tipo);
 
-    const tipo = await TipoConteudo.create({ ...tipo});
-    return tipo;
-  }
+        return response.status(200).json({"message": "Tipo de entretenimento cadastrado."});
 
-  // GET entretenimentos/list/:id
-  async list ({ params, request, response, view }) {
-    const tipo = await TipoConteudo.findOrFail(params.id);
-    return tipo;
-  }
-  
-  // PUT or PATCH entretenimentos/update/:id
-  async update ({ params, request, response }) {
-    const tipo  = await TipoConteudo.findOrFail(params.id);
-    const tipo = request.only([
-      'id',
-      'tipo'
-    ]);
+      } catch(e) {
+        return response.status(500).json(e);
+      }
+    }
 
-    tipo.merge(tipo);
-    await tipo.save();
-    return tipo
-  }
+    async list ({request, response}) {
+      try {
+        const {id} = request.params;
+        const tipo = await Database.from("entretenimentos").where("id", id)
 
-// DELETE entretenimentos/delete/:id
-async delete ({ params, request, response }) {
-  const tipo = await TipoConteudo.findOrFail(params.id);
+        if (tipo == '') {
+          return response.status(200).json({"message": "Tipo de entretenimento não encontrado!"});
+        }
 
+        return response.status(200).json({tipo});
+      } catch(e) {
+        return response.status(500).json({"message": "Erro!"});
+      }
 
-    if (tipo) {
-      await tipo.delete();
-      return response.status(200).send();
-    } else {
-      return response.status(404).send({ error: 'Not found' });
+    }
+
+    async listAll ({response}) {
+      try {
+        const tipo =  await Database
+          .from("entretenimentos")
+          .where("deleted_at", null)
+          .select('*')
+
+        return response.status(200).json({categorias});
+       }
+      catch(ex) {
+        return response.status(500).json({"message": "Erro!"});
+      }
+    }
+
+    async update ({request, response}) {
+      try {
+        const {id} = request.params;
+        const {nome} = request.body
+
+        await Categoria.query()
+          .from("entretenimentos")
+          .where("id", id)
+          .update({
+            nome,
+            updated_at: moment().format("YYYY-MM-DD")
+          });
+
+        return response.status(200).json({"mensage": "Tipo de entretenimento atualizado!"});
+      }
+      catch(ex) {
+        return response.status(500).json({"mensage": "Erro!", ex});
+      }
+    }
+
+    async delete ({request, response}) {
+      try {
+        const {id} = request.params;
+
+        await Categoria.query()
+          .from('entretenimentos')
+          .where('id', id)
+          .update({deleted_at: moment().format("YYYY-MM-DD")});
+
+        return response.status(200).json({"mensage": "Tipo de entretenimento deletado!"});
+
+      }
+      catch(ex) {
+        return response.status(500).json({"mensage": "Erro!", ex});
+      }
     }
   }
-}
 
 
 module.exports = TipoConteudoController
