@@ -1,93 +1,90 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Categoria = use('App/Models/Entretenimento');
+const Database = use('Database');
+const moment = require('moment');
 
-/**
- * Resourceful controller for interacting with tipoconteudos
- */
 class TipoConteudoController {
-  /**
-   * Show a list of all tipoconteudos.
-   * GET tipoconteudos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+    async create ({request, response}) {
+      try {
+        const tipo = request.only(["entretenimentos"]);
+
+        await TipoConteudo.create(tipo);
+
+        return response.status(200).json({"message": "Tipo de entretenimento cadastrado."});
+
+      } catch(e) {
+        return response.status(500).json(e);
+      }
+    }
+
+    async list ({request, response}) {
+      try {
+        const {id} = request.params;
+        const tipo = await Database.from("entretenimentos").where("id", id)
+
+        if (tipo == '') {
+          return response.status(200).json({"message": "Tipo de entretenimento não encontrado!"});
+        }
+
+        return response.status(200).json({tipo});
+      } catch(e) {
+        return response.status(500).json({"message": "Erro!"});
+      }
+
+    }
+
+    async listAll ({response}) {
+      try {
+        const tipo =  await Database
+          .from("entretenimentos")
+          .where("deleted_at", null)
+          .select('*')
+
+        return response.status(200).json({categorias});
+       }
+      catch(ex) {
+        return response.status(500).json({"message": "Erro!"});
+      }
+    }
+
+    async update ({request, response}) {
+      try {
+        const {id} = request.params;
+        const {nome} = request.body
+
+        await Categoria.query()
+          .from("entretenimentos")
+          .where("id", id)
+          .update({
+            nome,
+            updated_at: moment().format("YYYY-MM-DD")
+          });
+
+        return response.status(200).json({"mensage": "Tipo de entretenimento atualizado!"});
+      }
+      catch(ex) {
+        return response.status(500).json({"mensage": "Erro!", ex});
+      }
+    }
+
+    async delete ({request, response}) {
+      try {
+        const {id} = request.params;
+
+        await Categoria.query()
+          .from('entretenimentos')
+          .where('id', id)
+          .update({deleted_at: moment().format("YYYY-MM-DD")});
+
+        return response.status(200).json({"mensage": "Tipo de entretenimento deletado!"});
+
+      }
+      catch(ex) {
+        return response.status(500).json({"mensage": "Erro!", ex});
+      }
+    }
   }
 
-  /**
-   * Render a form to be used for creating a new tipoconteudo.
-   * GET tipoconteudos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
-   * Create/save a new tipoconteudo.
-   * POST tipoconteudos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
-
-  /**
-   * Display a single tipoconteudo.
-   * GET tipoconteudos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing tipoconteudo.
-   * GET tipoconteudos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update tipoconteudo details.
-   * PUT or PATCH tipoconteudos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a tipoconteudo with id.
-   * DELETE tipoconteudos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
-  }
-}
 
 module.exports = TipoConteudoController

@@ -6,11 +6,11 @@ const Model = use('Model')
 class Entreterimento extends Model {
     static boot () {
         super.boot();
-        this.addHook('beforeSave', 'EntreterimentoHook.uuid');
+        this.addHook('beforeSave', 'EntretenimentoHook.uuid');
     }
 
     static get table () {
-        return 'entreterimento'
+        return 'entretenimento'
     }
 
     static get primaryKey() {
@@ -20,7 +20,10 @@ class Entreterimento extends Model {
     static get incrementing() {
         return false;
     }
-
+    
+    entreterimento() {
+        return this.hasMany('App/Models/Entretenimento')
+      }
 }
 
 module.exports = Entreterimento

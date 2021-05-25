@@ -1,13 +1,13 @@
 'use strict'
 
-const Categoria = use('App/Models/Categoria');
+const Categoria = use('App/Models/categoria');
 const Database = use('Database');
 const moment = require('moment');
 
 class CategoriaController {
     async create ({request, response}) {
       try {
-        const categoria = request.only(["nome"]);
+        const categoria = request.only(["tipo"]);
 
         await Categoria.create(categoria);
 
