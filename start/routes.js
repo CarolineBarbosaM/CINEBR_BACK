@@ -59,3 +59,11 @@ Route.group(() => {
   Route.put('/update/:id', 'FilmeController.update');
   Route.delete('/delete/:id', 'FilmeController.delete');
 }).prefix('filmes');
+
+Route.group(() => {
+  Route.post('/create', 'ElencoController.create');
+  Route.get('/list/:id', 'ElencoController.list');
+  Route.get('/listAll', 'ElencoController.listAll');
+  Route.put('/update/:id', 'ElencoController.update');
+  Route.delete('/delete/:id', 'ElencoController.delete');
+}).prefix('elenco');

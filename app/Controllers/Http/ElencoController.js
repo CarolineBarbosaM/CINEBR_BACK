@@ -34,27 +34,81 @@ class ElencoController {
     if (elenco == ''){
 
       return response.status(200).json({"message": "message":"Elenco não foi encontrado" })
+                      }
+      return response.status(200).json({ elenco });
+     } catch(e){
 
-    }
-
-
-
-  }
-
-  }
+        return response.status(500).json({ "message": "Erro ao listar elenco" });
+                }
+                                    }
    
  
 
-  async listAll ({ params, request, response, view }) {
-  }
+  async listAll ({ response }) {
+    try { 
+      const elenco = await Database
+        .from('elenco')
+        .where('deleted_at',null)
+        .select('*')
+
+        return response.status(200).json({ elenco });
+
+       } 
+ 
+        catch(e) {
+            return response.status(500).json({ "message":"Erro ao listar todos os elencos"})
+
+                }     
+                            }     
 
 
-  async update ({ params, request, response }) {
-  }
+  async update ({ request, response }) {
+      try{
+          const { id } = request.params;
+          const { atores, id_entreterimento } = request.body
+
+          await elenco.query()
+          .from('elenco')
+          .where('id', id)
+          .update({
+            
+            id_entreterimento,
+            atores,
+            updated_at: moment().format("YYYY-MM-DD HH:mm:ss")
+            
+                  })
+
+            return response.status(200).json({ "message": "Elenco atualizado com sucesso." })
+
+        } 
+      
+      catch (e){
+        
+        return response.status(500).json({ "mensage": "Erro ao atualizado filmes." });
+
+              }
+                                  }
 
 
-  async delete ({ params, request, response }) {
+  async delete ({ request, response }) {
 
+        try {
+            const { id }= request.params;
+
+            await elenco.query()
+            .from('elenco')
+            .where('id', id)
+            .update({
+              deleted_at: moment().format("YYYY-MM-DD HH:mm:ss")
+            })
+
+            return response.status(200).json({ "mensage": "Elenco deletado com sucesso." });
+
+            }
+
+            catch(e){
+              return response.status(500).json({ "mensage": "Erro ao deletar Elenco." });
+            }
 
 
   }
