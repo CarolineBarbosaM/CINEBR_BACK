@@ -11,13 +11,39 @@ const Database = use('Database');
  */
 class ElencoController {
   async create ({ request, response, auth }) {
-    
+    try {
+      const elenco = request.only(["id_entreterimento","atores"])
+
+      await elenco.create(elenco);
+
+      return response.status(200).json({ "message": 'Elenco cadastrada com sucesso.' });
+
+        } 
+   
+        catch(e) {
+      return response.status(500).json({"message": 'Erro ao cadastrar elenco'}); 
+    }
 
   }
 
   async list ({ request, response }) {
+  try {
+    const { id } = request.params;
+    const user = await Database.from("elenco").where('id', id)
+
+    if (elenco == ''){
+
+      return response.status(200).json({"message": "message":"Elenco não foi encontrado" })
+
+    }
+
+
+
   }
 
+  }
+   
+ 
 
   async listAll ({ params, request, response, view }) {
   }
