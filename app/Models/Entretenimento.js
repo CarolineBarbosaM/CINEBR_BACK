@@ -6,11 +6,11 @@ const Model = use('Model')
 class Entretenimentos extends Model {
     static boot () {
         super.boot();
-        this.addHook('beforeSave', 'EntretenimentoHook.uuid');
+        this.addHook('beforeSave', 'EntreterimentoHook.uuid');
     }
 
     static get table () {
-        return 'entretenimentos'
+        return 'entreterimentos'
     }
 
     static get primaryKey() {
