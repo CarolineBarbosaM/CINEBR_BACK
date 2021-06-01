@@ -79,3 +79,11 @@ Route.group(() => {
   Route.put('/update/:id', 'ElencoController.update');
   Route.delete('/delete/:id', 'ElencoController.delete');
 }).prefix('elenco');
+
+Route.group(() => {
+  Route.post('/create', 'TipoConteudoController.create');
+  Route.get('/list/:id', 'TipoConteudoController.list');
+  Route.get('/listAll', 'TipoConteudoController.listAll');
+  Route.put('/update/:id', 'TipoConteudoController.update');
+  Route.delete('/delete/:id', 'TipoConteudoController.delete');
+}).prefix('tipoconteudo');
