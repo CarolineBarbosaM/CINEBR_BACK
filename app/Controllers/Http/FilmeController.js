@@ -1,38 +1,32 @@
 'use strict'
-const Filme= use('App/Models/Filme')
+
+const Filme = use('App/Models/Filme');
 const Database = use('Database');
-
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
-/**
- * Resourceful controller for interacting with filmes
- */
+const moment = require('moment');
 class FilmeController {
-  async create ({ request, response, auth }) {
+  async create ({ request, response }) {
     try {
-      const filme = request.only(["titulo", "ano", "sinopse", "classificacao", "capa"]);
+      const filmes = request.only(["titulo", "ano", "sinopse", "classificacao", "capa", "id_ator", "id_categoria"]);
 
-      await Filme.create(filme);
+      await Filme.create(filmes);
 
       return response.status(200).json({ "message": 'Filme cadastrada com sucesso.' });
 
     } catch(e) {
-      return response.status(500).json({"message": 'Erro ao cadastrar filme'});
+      return response.status(500).json({ "message": 'Erro ao cadastrar filme', e });
     }
   }
 
   async list ({ request, response }) {
     try {
       const { id } = request.params;
-      const user = await Database.from('filmes').where('id', id)
+      const filme = await Database.from('filmes').where('id', id)
 
       if (filme == '') {
         return response.status(200).json({ "message": "Filmes não foi encontrado" });
       }
 
-      return response.status(200).json({ serie });
+      return response.status(200).json({ filme });
     } catch(e) {
       return response.status(500).json({ "message": "Erro ao listar filmes" });
     }
@@ -58,7 +52,7 @@ class FilmeController {
       const { id } = request.params;
       const { titulo, ano,  sinopse, classificacao, capa, id_ator } = request.body
 
-      await Serie.query()
+      await Filme.query()
         .from('filmes')
         .where('id', id)
         .update({

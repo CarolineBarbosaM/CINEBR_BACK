@@ -10,7 +10,7 @@ class FilmesSchema extends Schema {
       table.string('titulo').notNullable().unique()
       table.date('ano')
       table.string('sinopse')
-      table.integer('classificacao')
+      table.string('classificacao')
       table.string('capa')
       table.string('id_ator')
       table.string('id_categoria')
