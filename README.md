@@ -1,4 +1,4 @@
-# CINEVR_BACK.js
+# CINEBR_BACK.js
 Projeto de api em Node.js, com Framework Adonis.js
 
 O AdonisJs vem pré-configurado com:
