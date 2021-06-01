@@ -1,5 +1,5 @@
-# CRUD-Adonis.js
-CRUD de usuário em Node.js, com Framework Adonis.js
+# CINEVR_BACK.js
+Projeto de api em Node.js, com Framework Adonis.js
 
 O AdonisJs vem pré-configurado com:
 
