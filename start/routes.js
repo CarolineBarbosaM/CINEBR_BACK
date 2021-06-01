@@ -55,6 +55,8 @@ Route.group(() => {
   Route.put('/update/:id', 'EntretenimentoController.update');
   Route.delete('/delete/:id', 'EntretenimentoController.delete');
 }).prefix('entretenimento');
+
+Route.group(() => {
   Route.post('/create', 'SeriesController.create');
   Route.get('/list/:id', 'SeriesController.list');
   Route.get('/listAll', 'SeriesController.listAll');
