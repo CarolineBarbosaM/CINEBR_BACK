@@ -4,6 +4,21 @@
 const Model = use('Model')
 
 class Categoria extends Model {
-}
+    static boot () {
+        super.boot();
+        this.addHook('beforeSave', 'CategoriaHook.uuid');
+    }
 
+    static get table () {
+        return 'categorias'
+      }
+
+      static get primaryKey(){
+        return 'id';
+      }
+
+      static get incrementing(){
+        return false;
+      }
+}
 module.exports = Categoria

@@ -32,4 +32,42 @@ Route.group(() => {
   Route.delete('/delete/:id', 'UserMController.delete');
 }).prefix('user');
 
-Route.resource('ators', 'AtorController').apiOnly();
+Route.group(() => {
+  Route.post('/create', 'AtorController.create');
+  Route.get('/list/:id', 'AtorController.list');
+  Route.get('/listAll', 'AtorController.listAll');
+  Route.put('/update/:id', 'AtorController.update');
+  Route.delete('/delete/:id', 'AtorController.delete');
+}).prefix('ators');
+
+Route.group(() => {
+  Route.post('/create', 'CategoriaController.create');
+  Route.get('/list/:id', 'CategoriaController.list');
+  Route.get('/listAll', 'CategoriaController.listAll');
+  Route.put('/update/:id', 'CategoriaController.update');
+  Route.delete('/delete/:id', 'CategoriaController.delete');
+}).prefix('categoria');
+
+Route.group(() => {
+  Route.post('/create', 'SeriesController.create');
+  Route.get('/list/:id', 'SeriesController.list');
+  Route.get('/listAll', 'SeriesController.listAll');
+  Route.put('/update/:id', 'SeriesController.update');
+  Route.delete('/delete/:id', 'SeriesController.delete');
+}).prefix('series');
+
+Route.group(() => {
+  Route.post('/create', 'FilmeController.create');
+  Route.get('/list/:id', 'FilmeController.list');
+  Route.get('/listAll', 'FilmeController.listAll');
+  Route.put('/update/:id', 'FilmeController.update');
+  Route.delete('/delete/:id', 'FilmeController.delete');
+}).prefix('filmes');
+
+Route.group(() => {
+  Route.post('/create', 'ElencoController.create');
+  Route.get('/list/:id', 'ElencoController.list');
+  Route.get('/listAll', 'ElencoController.listAll');
+  Route.put('/update/:id', 'ElencoController.update');
+  Route.delete('/delete/:id', 'ElencoController.delete');
+}).prefix('elenco');

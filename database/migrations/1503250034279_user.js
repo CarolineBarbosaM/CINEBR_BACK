@@ -9,6 +9,7 @@ class UserSchema extends Schema {
       table.uuid('id').primary()
       table.string('name_user').notNullable().unique()
       table.string('email').notNullable().unique()
+      table.string('profile').notNullable()
       table.string('dt_nascimento')
       table.string('sexo')
       table.string('phone')
