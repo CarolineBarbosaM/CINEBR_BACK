@@ -1,4 +1,7 @@
 'use strict'
+const Elenco= use('App/Models/Elenco')
+const Database = use('Database');
+const moment = require('moment');
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -8,85 +11,91 @@
  * Resourceful controller for interacting with elencos
  */
 class ElencoController {
-  /**
-   * Show a list of all elencos.
-   * GET elencos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
+  async create ({ request, response }) {
+    try {
+      const elenco = request.only(["id_entreterimento","atores"])
+
+      await Elenco.create(elenco);
+
+      return response.status(200).json({ "message": 'Elenco cadastrada com sucesso.' });
+    }
+    catch(e) {
+      return response.status(500).json({"message": 'Erro ao cadastrar elenco'});
+    }
+
   }
 
-  /**
-   * Render a form to be used for creating a new elenco.
-   * GET elencos/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+  async list ({ request, response }) {
+    try {
+      const { id } = request.params;
+      const elenco = await Database.from("elencos").where('id', id)
+
+      if (elenco == ''){
+        return response.status(200).json({"message": "Elenco não foi encontrado" })
+      }
+      return response.status(200).json(elenco);
+    } catch(e){
+      return response.status(500).json({ "message": "Erro ao listar elenco" });
+    }
   }
 
-  /**
-   * Create/save a new elenco.
-   * POST elencos
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
+  async listAll ({ response }) {
+    try {
+      const elenco = await Database
+        .from('elencos')
+        .where('deleted_at',null)
+        .select('*')
+
+        return response.status(200).json(elenco);
+    }
+    catch(e) {
+      return response.status(500).json({ "message":"Erro ao listar todos os elencos"})
+    }
   }
 
-  /**
-   * Display a single elenco.
-   * GET elencos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
+  async update ({ request, response }) {
+    try{
+      const { id } = request.params;
+      const { id_entreterimento, atores } = request.body
+
+      await Elenco.query()
+      .from('elencos')
+      .where('id', id)
+      .update({
+        id_entreterimento,
+        atores,
+        updated_at: moment().format("YYYY-MM-DD HH:mm:ss")
+      })
+
+      return response.status(200).json({ "message": "Elenco atualizado com sucesso." })
+    }
+    catch (e){
+      return response.status(500).json({ "mensage": "Erro ao atualizado elenco.", e });
+    }
   }
 
-  /**
-   * Render a form to update an existing elenco.
-   * GET elencos/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
 
-  /**
-   * Update elenco details.
-   * PUT or PATCH elencos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
+  async delete ({ request, response }) {
 
-  /**
-   * Delete a elenco with id.
-   * DELETE elencos/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+        try {
+            const { id }= request.params;
+
+            await Elenco.query()
+            .from('elencos')
+            .where('id', id)
+            .update({
+              deleted_at: moment().format("YYYY-MM-DD HH:mm:ss")
+            })
+
+            return response.status(200).json({ "mensage": "Elenco deletado com sucesso." });
+
+            }
+
+            catch(e){
+              return response.status(500).json({ "mensage": "Erro ao deletar Elenco." });
+            }
+
+
   }
 }
 

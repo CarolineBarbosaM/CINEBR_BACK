@@ -1,5 +1,7 @@
 'use strict'
 
+const AuthController = require('../app/Controllers/Http/AuthController')
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -19,6 +21,8 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+
+Route.post('/auth', 'AuthController.authenticate');
 
 Route.group(() => {
   Route.post('/create', 'UserMController.create');
@@ -51,3 +55,25 @@ Route.group(() => {
   Route.put('/update/:id', 'EntretenimentoController.update');
   Route.delete('/delete/:id', 'EntretenimentoController.delete');
 }).prefix('entretenimento');
+  Route.post('/create', 'SeriesController.create');
+  Route.get('/list/:id', 'SeriesController.list');
+  Route.get('/listAll', 'SeriesController.listAll');
+  Route.put('/update/:id', 'SeriesController.update');
+  Route.delete('/delete/:id', 'SeriesController.delete');
+}).prefix('series');
+
+Route.group(() => {
+  Route.post('/create', 'FilmeController.create');
+  Route.get('/list/:id', 'FilmeController.list');
+  Route.get('/listAll', 'FilmeController.listAll');
+  Route.put('/update/:id', 'FilmeController.update');
+  Route.delete('/delete/:id', 'FilmeController.delete');
+}).prefix('filmes');
+
+Route.group(() => {
+  Route.post('/create', 'ElencoController.create');
+  Route.get('/list/:id', 'ElencoController.list');
+  Route.get('/listAll', 'ElencoController.listAll');
+  Route.put('/update/:id', 'ElencoController.update');
+  Route.delete('/delete/:id', 'ElencoController.delete');
+}).prefix('elenco');

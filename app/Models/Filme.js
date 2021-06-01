@@ -1,12 +1,11 @@
 'use strict'
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
 class Filme extends Model {
   static boot () {
     super.boot();
-    this.addHook('beforeSave', 'FilmesHook.uuid');
+    this.addHook('beforeSave', 'FilmeHook.uuid');
   }
 
   static get table () {
