@@ -8,7 +8,7 @@ class SeriesSchema extends Schema {
     this.create('series', (table) => {
       table.uuid('id').primary()
       table.string('titulo').notNullable().unique()
-      table.date('ano')
+      table.string('ano')
       table.string('sinopse')
       table.integer('classificacao')
       table.string('capa')
