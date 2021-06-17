@@ -1,7 +1,4 @@
 'use strict'
-
-const AuthController = require('../app/Controllers/Http/AuthController')
-
 /*
 |--------------------------------------------------------------------------
 | Routes
