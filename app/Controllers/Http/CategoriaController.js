@@ -7,14 +7,14 @@ const moment = require('moment');
 class CategoriaController {
     async create ({request, response}) {
       try {
-        const categoria = request.only(["tipo"]);
+        const categoria = request.only(["nome"]);
 
         await Categoria.create(categoria);
 
         return response.status(200).json({"message": "Categoria cadastrada."});
 
       } catch(e) {
-        return response.status(500).json(e);
+        return response.status(500).json("Erro ao criar categoria");
       }
     }
 

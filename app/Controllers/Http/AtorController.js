@@ -11,8 +11,12 @@ const moment = require('moment');
 class AtorController {
   // GET ators/listAll
   async listAll ({ request, response, view }) {
-    const atores = Ator.all();
-    return atores;
+    try {
+      const atores = Ator.all();
+      return response.status(200).json(atores);
+    } catch (error) {
+      return response.status(500).json({"mensage": "Erro ao listar atores" });
+    }
   }
 
   // POST ators/create
@@ -24,14 +28,27 @@ class AtorController {
       'elenco'
     ])
 
+    const atorExist = await Ator.findBy({'nome': data.nome, deleted_at: null});
+    if(atorExist) {
+      return response.status(500).json({ "mensage": "Ator já existe" });
+    }
+
+    if(!data){
+      return response.status(500).json({"mensage": "Erro ao criar ator" });
+    }
+
     const ator = await Ator.create({ ...data });
-    return ator;
+    return response.status(200).json(ator);
   }
 
   // GET ators/list/:id
   async list ({ params, request, response, view }) {
-    const ator = await Ator.findOrFail(params.id);
-    return ator;
+    try {
+      const ator = await Ator.findOrFail(params.id);
+      return response.status(200).json(ator);
+    }catch(err) {
+      return response.status(500).json({"mensage": "Erro ao listar ator" });
+    }
   }
 
   // PUT or PATCH ators/update/:id
@@ -63,9 +80,9 @@ class AtorController {
           participacao,
           updated_at: moment().format("YYYY-MM-DD HH:mm:ss")
         });
-      return response.status(200).json({ "mensage": "Usuario atualizado com sucesso." });
+      return response.status(200).json({ "mensage": "Ator atualizado com sucesso." });
     } catch(e) {
-      return response.status(500).json({ "mensage": e });
+      return response.status(500).json({ "mensage": "Erro ao atualizar ator" });
     }
   }
 
