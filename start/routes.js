@@ -60,7 +60,7 @@ Route.group(() => {
   Route.get('/listAll', 'SeriesController.listAll');
   Route.put('/update/:id', 'SeriesController.update');
   Route.delete('/delete/:id', 'SeriesController.delete');
-}).prefix('series');
+prefix('series');
 
 Route.group(() => {
   Route.post('/create', 'FilmeController.create');
