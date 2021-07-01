@@ -40,7 +40,7 @@ class SeriesController {
         .where('deleted_at', null)
         .select('*')
 
-      return response.status(200).json({ series });
+      return response.status(200).json( series );
     } catch(e) {
       return response.status(500).json({ "message": "Erro ao listar todos os series" });
     }
