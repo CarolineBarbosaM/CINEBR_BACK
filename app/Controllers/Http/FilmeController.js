@@ -10,10 +10,10 @@ class FilmeController {
 
       await Filme.create(filmes);
 
-      return response.status(200).json({ "message": 'Filme cadastrada com sucesso.' });
+      return response.status(200).json({ "message": "Filme cadastrado com sucesso." });
 
     } catch(e) {
-      return response.status(500).json({ "message": 'Erro ao cadastrar filme', e });
+      return response.status(500).json({ "message": "Erro ao cadastrar filme"});
     }
   }
 
@@ -26,7 +26,7 @@ class FilmeController {
         return response.status(200).json({ "message": "Filmes não foi encontrado" });
       }
 
-      return response.status(200).json({ filme });
+      return response.status(200).json( filme );
     } catch(e) {
       return response.status(500).json({ "message": "Erro ao listar filmes" });
     }

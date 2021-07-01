@@ -1,5 +1,7 @@
 'use strict'
 const User = use('App/Models/User');
+const chai = require('chai')
+const expect = chai.expect
 
 class AuthController {
   async authenticate ({ request, response, auth }) {
@@ -30,6 +32,15 @@ class AuthController {
       return response.status(500).json({ message: "Error ao autenticar usuário." });
     }
   }
+
+  describe('Autenticação', () => {
+    it('Autenticar Usuarios', (done) => {
+        const resultado = authenticate(carolbarbosa@teste.com, 456123)
+        expect(resultado).to.be.an('array')
+        expect(resultado).to.be.equal(4)
+        done()
+    })
+})
 }
 
 module.exports = AuthController

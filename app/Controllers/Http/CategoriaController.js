@@ -14,7 +14,7 @@ class CategoriaController {
         return response.status(200).json({"message": "Categoria cadastrada."});
 
       } catch(e) {
-        return response.status(500).json("Erro ao criar categoria");
+        return response.status(500).json({"message":"Erro ao criar categoria"});
       }
     }
 
@@ -27,7 +27,7 @@ class CategoriaController {
           return response.status(200).json({"message": "Categoria não encontrada!"});
         }
 
-        return response.status(200).json({categoria});
+        return response.status(200).json(categoria);
       } catch(e) {
         return response.status(500).json({"message": "Erro!"});
       }
@@ -64,7 +64,7 @@ class CategoriaController {
         return response.status(200).json({"mensage": "Categoria atualizada!"});
       }
       catch(ex) {
-        return response.status(500).json({"mensage": "Erro!", ex});
+        return response.status(500).json({"mensage": "Erro!"});
       }
     }
 
@@ -81,7 +81,7 @@ class CategoriaController {
 
       }
       catch(ex) {
-        return response.status(500).json({"mensage": "Erro!", ex});
+        return response.status(500).json({"mensage": "Erro!"});
       }
     }
   }

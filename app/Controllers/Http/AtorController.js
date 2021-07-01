@@ -38,7 +38,7 @@ class AtorController {
     }
 
     const ator = await Ator.create({ ...data });
-    return response.status(200).json(ator);
+    return response.status(200).json({"mensage": "Ator criado com sucesso." });
   }
 
   // GET ators/list/:id
