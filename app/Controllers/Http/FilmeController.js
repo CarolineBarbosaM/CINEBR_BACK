@@ -40,7 +40,7 @@ class FilmeController {
         .where('deleted_at', null)
         .select('*')
 
-      return response.status(200).json({ filmes });
+      return response.status(200).json(filmes);
     } catch(e) {
       return response.status(500).json({ "message": "Erro ao listar todos os filmes" });
     }
