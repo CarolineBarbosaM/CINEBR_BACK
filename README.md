@@ -1,5 +1,5 @@
-# CRUD-Adonis.js
-CRUD de usuário em Node.js, com Framework Adonis.js
+# CINEBR_BACK.js
+Projeto de api em Node.js, com Framework Adonis.js
 
 O AdonisJs vem pré-configurado com:
 
@@ -17,7 +17,8 @@ O AdonisJs vem pré-configurado com:
 ### 1 - Clone o reposotório 
 
 ```bash
-git clone https://github.com/CarolineBarbosaM/CRUD-Adonisjs.git
+git clone git clone https://github.com/CarolineBarbosaM/CINEBR_BACK.git
+
 ```
 
 ### 2 - Instale a Dependências: 
@@ -80,3 +81,4 @@ DB_DATABASE=
 HASH_DRIVER=
 
 ```
+

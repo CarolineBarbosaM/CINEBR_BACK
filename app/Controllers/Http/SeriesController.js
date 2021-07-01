@@ -4,7 +4,7 @@ const Database = use('Database');
 const moment = require('moment');
 
 class SeriesController {
-  async create ({ request, response, auth }) {
+  async create ({ request, response }) {
     try {
       const serie = request.only(["titulo", "ano", "sinopse", "classificacao", "capa"]);
 
@@ -20,13 +20,13 @@ class SeriesController {
   async list ({ request, response }) {
     try {
       const { id } = request.params;
-      const user = await Database.from('series').where('id', id)
+      const serie = await Database.from('series').where('id', id)
 
       if (serie == '') {
         return response.status(200).json({ "message": "Series não encontrado" });
       }
 
-      return response.status(200).json({ serie });
+      return response.status(200).json(serie);
     } catch(e) {
       return response.status(500).json({ "message": "Erro ao listar series" });
     }
@@ -40,7 +40,7 @@ class SeriesController {
         .where('deleted_at', null)
         .select('*')
 
-      return response.status(200).json({ series });
+      return response.status(200).json(series);
     } catch(e) {
       return response.status(500).json({ "message": "Erro ao listar todos os series" });
     }

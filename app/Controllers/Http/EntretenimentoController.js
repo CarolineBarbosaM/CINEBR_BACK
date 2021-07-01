@@ -11,7 +11,7 @@ class EntretenimentoController {
       return response.status(200).json({ "message": "Tipo de entretenimento cadastrado." });
 
     } catch(e) {
-      return response.status(500).json(e);
+      return response.status(500).json({"message":"Error ao criar entretenimento"});
     }
   }
 
@@ -61,7 +61,7 @@ class EntretenimentoController {
       return response.status(200).json({ "mensage": "Tipo de entretenimento atualizado!" });
     }
     catch(ex) {
-      return response.status(500).json({ "mensage": "Erro!", ex });
+      return response.status(500).json({ "mensage": "Erro!"});
     }
   }
 
@@ -78,7 +78,7 @@ class EntretenimentoController {
 
     }
     catch(ex) {
-      return response.status(500).json({ "mensage": "Erro!", ex });
+      return response.status(500).json({"mensage": "Erro!"});
     }
   }
 }

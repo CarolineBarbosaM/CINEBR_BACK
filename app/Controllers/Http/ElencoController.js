@@ -70,7 +70,7 @@ class ElencoController {
       return response.status(200).json({ "message": "Elenco atualizado com sucesso." })
     }
     catch (e){
-      return response.status(500).json({ "mensage": "Erro ao atualizado elenco.", e });
+      return response.status(500).json({ "mensage": "Erro ao atualizar elenco." });
     }
   }
 

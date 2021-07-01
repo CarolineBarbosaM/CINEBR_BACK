@@ -1,7 +1,4 @@
 'use strict'
-
-const AuthController = require('../app/Controllers/Http/AuthController')
-
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -55,6 +52,8 @@ Route.group(() => {
   Route.put('/update/:id', 'EntretenimentoController.update');
   Route.delete('/delete/:id', 'EntretenimentoController.delete');
 }).prefix('entretenimento');
+
+Route.group(() => {
   Route.post('/create', 'SeriesController.create');
   Route.get('/list/:id', 'SeriesController.list');
   Route.get('/listAll', 'SeriesController.listAll');
@@ -77,3 +76,11 @@ Route.group(() => {
   Route.put('/update/:id', 'ElencoController.update');
   Route.delete('/delete/:id', 'ElencoController.delete');
 }).prefix('elenco');
+
+Route.group(() => {
+  Route.post('/create', 'TipoConteudoController.create');
+  Route.get('/list/:id', 'TipoConteudoController.list');
+  Route.get('/listAll', 'TipoConteudoController.listAll');
+  Route.put('/update/:id', 'TipoConteudoController.update');
+  Route.delete('/delete/:id', 'TipoConteudoController.delete');
+}).prefix('tipoconteudo');

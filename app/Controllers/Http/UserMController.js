@@ -7,13 +7,16 @@ class UserMController {
   async create ({ request, response }) {
     try {
       const user = request.only(["name_user", "email", "password", "dt_nascimento", "sexo", "phone", "acesso", "ativo"]);
-
+      const userExist = await User.findBy({'name_user': user.name_user, 'email': user.email, deleted_at: null});
+      if(userExist) {
+        return response.status(500).json({ "mensage": "Usuário já existe" });
+      }
       await User.create(user);
 
       return response.status(200).json({ "message": 'Usuário cadastrado com sucesso.' });
 
     } catch(e) {
-      return response.status(500).json(e);
+      return response.status(500).json({ "message": 'Erro ao cadastrar usuário.' });
     }
   }
 
@@ -69,7 +72,7 @@ class UserMController {
       return response.status(200).json({ "mensage": "Usuario atualizado com sucesso." });
 
     } catch(e) {
-      return response.status(500).json({ "mensage": "Erro ao atualizado usuario." });
+      return response.status(500).json({ "mensage": "Erro ao atualizar usuario." });
     }
   }
 
