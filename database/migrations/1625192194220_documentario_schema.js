@@ -3,9 +3,10 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema')
 
-class FilmesSchema extends Schema {
+class DocumentarioSchema extends Schema {
   up () {
-    this.create('filmes', (table) => {
+    this.create('documentarios', (table) => {
+       this.create('filmes', (table) => {
       table.uuid('id').primary()
       table.string('titulo').notNullable().unique()
       table.string('ano')
@@ -20,8 +21,8 @@ class FilmesSchema extends Schema {
   }
 
   down () {
-    this.drop('filmes')
+    this.drop('documentarios')
   }
 }
 
-module.exports = FilmesSchema
+module.exports = DocumentarioSchema
