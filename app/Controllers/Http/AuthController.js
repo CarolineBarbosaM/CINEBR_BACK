@@ -27,7 +27,7 @@ class AuthController {
       return response.status(200).json({token})
 
     } catch(e) {
-      return response.status(500).json({ message: "Error ao autenticar usuário." });
+      return response.status(500).json({ message: "Error ao autenticar usuário."});
     }
   }
 }
